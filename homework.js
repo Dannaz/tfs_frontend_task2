@@ -67,9 +67,6 @@ function demonstrate(){
 	console.log("Здание 2.3");
 	console.log(expandArray([[1, 2], [3, 4, 5], [6, 7]]));
 	console.log("Здание 2.4");
-	console.log(sum1(1)(2)(3)());
-	console.log(sum2(1)(2)(3).toString());
-	console.log("Здание 2.5");
 	var obj = {
 		prop: "value",
 		getProp: function() {
@@ -82,5 +79,8 @@ function demonstrate(){
 	getProp = myBind(obj.getProp,obj);
 	console.log("С myBind");
 	getProp();
+	console.log("Здание 2.5");
+	console.log(sum1(1)(2)(3)());
+	console.log(sum2(1)(2)(3).toString());
 }
 demonstrate();
