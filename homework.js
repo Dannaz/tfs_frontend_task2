@@ -29,14 +29,39 @@ function myBind(func, context) {
 		return func.apply(context, arguments);
 	}
 }
+//Утащил с mdn, но я разобрался как работает, честно ;-)
+Function.prototype.myBindTwo = function (oThis) {
+	if (typeof this !== 'function') {
+		throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+	}
+	//this arg
+	var aArgs = Array.prototype.slice.call(arguments, 1),
+	//function to bind
+		fToBind = this,
+	//prototype of new function object
+		fNOP    = function() {},
+	//bind function
+		fBound  = function() {
+			//this - function && othis -
+			return fToBind.apply(this instanceof fNOP && oThis
+					? this
+					: oThis,
+				aArgs.concat(Array.prototype.slice.call(arguments)));
+		};
+	fNOP.prototype = this.prototype;
+	fBound.prototype = new fNOP();
+
+	return fBound;
+};
+
 //2.5
 //Вызывается как sum1(a)(b)(c)()
 function sum1(a) {
 	var currentSum = a;
 
   	function f(b) {
-  		if (!isNaN(b)) {
-  			currentSum += b;
+		if (!isNaN(b)) {
+  			currentSum = currentSum + b;
     		return f;
   		}
     	return currentSum;
@@ -79,9 +104,14 @@ function demonstrate(){
 	getProp = myBind(obj.getProp,obj);
 	console.log("С myBind");
 	getProp();
+	console.log("C myBindTwo");
+	var getProp2 = obj.getProp.myBindTwo(obj);
+	getProp2();
 	console.log("Здание 2.5");
 	console.log(sum1(1)(2)(3)());
 	console.log(sum2(1)(2)(3).toString());
 }
 demonstrate();
+
+
 
