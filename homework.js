@@ -1,6 +1,6 @@
 //2.1 Не работает с отрицательными числами.
 function convertToBinary(value) {
-	return (value > 0) ? convertToBinary(Math.floor(value / 2)) + (value % 2).toString() : "0";
+	return (value > 0) ? convertToBinary(Math.floor(value / 2)) + (value % 2).toString() : "";
 }
 //2.2
 function getIntersectingElements(arr1, arr2) {
@@ -35,7 +35,7 @@ function sum1(a) {
 	var currentSum = a;
 
   	function f(b) {
-  		if (parseInt(b)) {
+  		if (!isNaN(b)) {
   			currentSum += b;
     		return f;
   		}
@@ -84,3 +84,4 @@ function demonstrate(){
 	console.log(sum2(1)(2)(3).toString());
 }
 demonstrate();
+
